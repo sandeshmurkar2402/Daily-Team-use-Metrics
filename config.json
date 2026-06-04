@@ -1,0 +1,6 @@
+{
+  "spreadsheetId": "1Igfa2fT6qpsDg4Elo3J538zTLWi6TucUXTJQr2HN2Ow",
+  "range": "Sheet1!A1:Z1000",
+  "credentialsPath": "credentials.json",
+  "dashboardTitle": "Business Dashboard"
+}

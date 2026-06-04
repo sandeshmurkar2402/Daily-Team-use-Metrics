@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Business Dashboard</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #060d1a;
+      --surface:  #0d1728;
+      --surface2: #111f35;
+      --border:   #1a2d47;
+      --border2:  #223550;
+      --text:     #e2e8f0;
+      --muted:    #64748b;
+      --subtle:   #94a3b8;
+      --green:    #22c55e;
+      --green-bg: rgba(34,197,94,0.12);
+      --red:      #f87171;
+      --red-bg:   rgba(248,113,113,0.12);
+      --blue:     #3b82f6;
+      --radius:   10px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      font-size: 14px;
+    }
+
+    /* ─── Header ─────────────────────────────────────── */
+    header {
+      background: linear-gradient(135deg, #0a1628 0%, #0f1f3d 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand { display: flex; flex-direction: column; gap: 2px; }
+
+    .brand-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #fff;
+    }
+
+    .brand-title span { color: var(--blue); }
+
+    .brand-sub {
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    .header-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .yesterday-badge {
+      background: rgba(59,130,246,0.15);
+      border: 1px solid rgba(59,130,246,0.35);
+      color: #93c5fd;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 5px 14px;
+      border-radius: 20px;
+      letter-spacing: 0.02em;
+    }
+
+    .last-updated-text {
+      font-size: 0.67rem;
+      color: var(--muted);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .countdown-pill {
+      font-size: 0.72rem;
+      color: var(--subtle);
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 5px 10px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+
+    .countdown-pill strong { color: var(--blue); }
+
+    .refresh-btn {
+      background: var(--blue);
+      color: #fff;
+      border: none;
+      padding: 7px 16px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      white-space: nowrap;
+    }
+
+    .refresh-btn:hover  { background: #2563eb; }
+    .refresh-btn:active { transform: scale(0.97); }
+    .refresh-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* Spinner inside button */
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .spinner {
+      width: 13px; height: 13px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      flex-shrink: 0;
+    }
+
+    /* Refresh status toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      z-index: 999;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.25s, transform 0.25s;
+      pointer-events: none;
+    }
+
+    .toast.show    { opacity: 1; transform: translateY(0); }
+    .toast.success { background: #166534; color: #bbf7d0; border: 1px solid #15803d; }
+    .toast.error   { background: #7f1d1d; color: #fecaca; border: 1px solid #b91c1c; }
+    .toast.info    { background: #1e3a5f; color: #bfdbfe; border: 1px solid #1d4ed8; }
+
+    /* ─── Layout ──────────────────────────────────────── */
+    main {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 24px 20px 48px;
+    }
+
+    /* ─── KPI Summary Cards ───────────────────────────── */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+
+    .kpi-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kpi-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      border-radius: var(--radius) var(--radius) 0 0;
+    }
+
+    .kpi-card[data-color="blue"]::after   { background: #3b82f6; }
+    .kpi-card[data-color="purple"]::after { background: #8b5cf6; }
+    .kpi-card[data-color="green"]::after  { background: #10b981; }
+    .kpi-card[data-color="amber"]::after  { background: #f59e0b; }
+    .kpi-card[data-color="red"]::after    { background: #ef4444; }
+    .kpi-card[data-color="cyan"]::after   { background: #06b6d4; }
+
+    .kpi-label {
+      font-size: 0.72rem;
+      color: var(--muted);
+      font-weight: 500;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .kpi-value {
+      font-size: 1.9rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 10px;
+      color: #fff;
+    }
+
+    .kpi-compare {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+    }
+
+    .kpi-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 0.72rem;
+    }
+
+    .kpi-badge.good { background: var(--green-bg); color: var(--green); }
+    .kpi-badge.bad  { background: var(--red-bg);   color: var(--red);   }
+    .kpi-badge.neutral { background: rgba(148,163,184,0.1); color: var(--muted); }
+
+    .kpi-compare-label { color: var(--muted); }
+
+    /* ─── Category Sections ───────────────────────────── */
+    .category-section {
+      margin-bottom: 20px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .category-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 18px;
+      background: var(--surface2);
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .category-accent {
+      width: 4px;
+      height: 20px;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    .category-name {
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--subtle);
+    }
+
+    .category-count {
+      font-size: 0.68rem;
+      color: var(--muted);
+      background: rgba(255,255,255,0.05);
+      padding: 2px 7px;
+      border-radius: 10px;
+    }
+
+    .category-chevron {
+      margin-left: auto;
+      color: var(--muted);
+      font-size: 0.75rem;
+      transition: transform 0.2s;
+    }
+
+    .category-section.collapsed .category-chevron { transform: rotate(-90deg); }
+    .category-section.collapsed .category-body    { display: none; }
+
+    /* ─── Metrics Table ───────────────────────────────── */
+    .metric-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .metric-table thead th {
+      background: rgba(255,255,255,0.03);
+      color: var(--muted);
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      padding: 9px 16px;
+      text-align: right;
+      white-space: nowrap;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .metric-table thead th:first-child {
+      text-align: left;
+      min-width: 220px;
+    }
+
+    .th-yesterday {
+      background: rgba(59,130,246,0.07) !important;
+      color: #93c5fd !important;
+    }
+
+    .metric-table tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background 0.1s;
+    }
+
+    .metric-table tbody tr:last-child { border-bottom: none; }
+    .metric-table tbody tr:hover { background: rgba(255,255,255,0.025); }
+
+    .metric-table td {
+      padding: 11px 16px;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+      color: var(--subtle);
+    }
+
+    .metric-table td:first-child {
+      text-align: left;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* Yesterday column */
+    .td-yesterday {
+      background: rgba(59,130,246,0.04);
+      font-weight: 700 !important;
+      font-size: 0.88rem;
+    }
+
+    .val-good { color: var(--green) !important; }
+    .val-bad  { color: var(--red)   !important; }
+
+    .direction {
+      display: inline-block;
+      font-size: 0.65rem;
+      margin-left: 3px;
+      vertical-align: middle;
+    }
+
+    .direction.good { color: var(--green); }
+    .direction.bad  { color: var(--red); }
+
+    /* ─── Loading Skeleton ────────────────────────────── */
+    @keyframes shimmer {
+      0%   { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    .skeleton {
+      background: linear-gradient(90deg,
+        var(--surface) 25%, var(--surface2) 50%, var(--surface) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: 8px;
+    }
+
+    .skeleton-kpi-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+
+    .skeleton-kpi { height: 110px; }
+    .skeleton-section { height: 180px; margin-bottom: 20px; }
+
+    /* ─── Error ───────────────────────────────────────── */
+    .error-box {
+      background: rgba(239,68,68,0.08);
+      border: 1px solid rgba(239,68,68,0.3);
+      border-radius: var(--radius);
+      padding: 32px;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .error-box h3 { color: var(--red); margin-bottom: 8px; }
+    .error-box p  { color: var(--muted); font-size: 0.82rem; }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════ HEADER ═══════════════════════ -->
+<header>
+  <div class="brand">
+    <div class="brand-title">Business <span>Dashboard</span></div>
+    <div class="brand-sub" id="last-updated-text">Loading…</div>
+  </div>
+
+  <div class="header-center">
+    <div class="yesterday-badge" id="yesterday-badge">Yesterday: —</div>
+  </div>
+
+  <div class="header-right">
+    <div class="countdown-pill" id="countdown">—</div>
+    <button class="refresh-btn" id="refresh-btn" onclick="onRefreshClick()">
+      <span id="refresh-icon">&#8635;</span>
+      <span id="refresh-label">Refresh</span>
+    </button>
+  </div>
+</header>
+
+<!-- ═══════════════════════ MAIN ══════════════════════════ -->
+<main>
+
+  <!-- Loading -->
+  <div id="loading">
+    <div class="skeleton-kpi-row">
+      <div class="skeleton skeleton-kpi"></div>
+      <div class="skeleton skeleton-kpi"></div>
+      <div class="skeleton skeleton-kpi"></div>
+      <div class="skeleton skeleton-kpi"></div>
+    </div>
+    <div class="skeleton skeleton-section"></div>
+    <div class="skeleton skeleton-section"></div>
+    <div class="skeleton skeleton-section"></div>
+  </div>
+
+  <!-- Dashboard content -->
+  <div id="dashboard" class="hidden"></div>
+
+  <!-- Error -->
+  <div id="error-box" class="error-box hidden">
+    <h3>Could not load data</h3>
+    <p id="error-msg">Make sure data/metrics.json exists and the page is served over HTTP.</p>
+  </div>
+
+</main>
+
+<!-- Toast notification -->
+<div class="toast" id="toast"></div>
+
+<!-- ═══════════════════════ SCRIPT ══════════════════════ -->
+<script>
+const REFRESH_MS = 2 * 60 * 60 * 1000;
+
+// ─── Category definitions ──────────────────────────────
+const CATEGORIES = [
+  {
+    name: "Traffic",
+    color: "#3b82f6",
+    cardColor: "blue",
+    isKpi: true,
+    kpiMetric: "Total PVs",
+    metrics: ["Total PVs", "Web PV", "iOS app open", "Android app open"],
+  },
+  {
+    name: "Conversion",
+    color: "#8b5cf6",
+    cardColor: "purple",
+    isKpi: true,
+    kpiMetric: "Overall cr%",
+    metrics: ["Overall cr%", "Web cr%", "IOS app cr%", "Android app cr%"],
+  },
+  {
+    name: "Sessions",
+    color: "#10b981",
+    cardColor: "green",
+    isKpi: true,
+    kpiMetric: "# of Paid sessions",
+    metrics: ["# of Paid sessions", "Sessions Targets", "Targets Achieved", "% achieved targets for the day"],
+  },
+  {
+    name: "1:1 Sessions",
+    color: "#f59e0b",
+    cardColor: "amber",
+    isKpi: false,
+    metrics: ["One On One Targets for the day", "One On One achieved for the day", "One On One Targets Achieved"],
+  },
+  {
+    name: "Customer Support",
+    color: "#ef4444",
+    cardColor: "red",
+    isKpi: true,
+    kpiMetric: "Customer Queries for the day",
+    metrics: ["Customer Queries for the day", "First Response Time Average", "Resolution Time Average"],
+    lowerIsBetter: new Set(["First Response Time Average", "Resolution Time Average"]),
+  },
+  {
+    name: "App & Hindi",
+    color: "#06b6d4",
+    cardColor: "cyan",
+    isKpi: false,
+    metrics: ["App Revenue Share for the day", "Hindi Sessions for the Day", "Hindi Session Registrations for the day"],
+  },
+];
+
+// ─── Helpers ───────────────────────────────────────────
+let nextRefreshAt = Date.now() + REFRESH_MS;
+let countdownTimer = null;
+
+function parseNum(val) {
+  if (!val || val === '-') return null;
+  const s = String(val).replace(/[,\s₹$€£%]/g, '');
+  const n = parseFloat(s);
+  return isNaN(n) ? null : n;
+}
+
+function direction(metric, yesterday, avg7d, lowerIsBetter) {
+  const y = parseNum(yesterday);
+  const a = parseNum(avg7d);
+  if (y === null || a === null || a === 0) return 'neutral';
+  const diff = Math.abs((y - a) / a);
+  if (diff < 0.005) return 'neutral'; // within 0.5%, treat as same
+  const better = lowerIsBetter ? y < a : y > a;
+  return better ? 'good' : 'bad';
+}
+
+function dirArrow(dir) {
+  if (dir === 'good') return '<span class="direction good">&#9650;</span>';
+  if (dir === 'bad')  return '<span class="direction bad">&#9660;</span>';
+  return '';
+}
+
+function formatDate(iso) {
+  try {
+    return new Date(iso).toLocaleString(undefined, {
+      day: 'numeric', month: 'short', year: 'numeric',
+      hour: '2-digit', minute: '2-digit',
+    });
+  } catch { return iso; }
+}
+
+function formatCountdown(ms) {
+  if (ms <= 0) return 'due';
+  const h = Math.floor(ms / 3600000);
+  const m = Math.floor((ms % 3600000) / 60000);
+  const s = Math.floor((ms % 60000) / 1000);
+  if (h > 0) return `${h}h ${m}m`;
+  if (m > 0) return `${m}m ${s}s`;
+  return `${s}s`;
+}
+
+function formatYesterdayDate(raw) {
+  // e.g. "3-Jun-26" → "3 June 2026"
+  try {
+    const parts = raw.split('-');
+    if (parts.length === 3) {
+      const months = {Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11};
+      const d = parseInt(parts[0]);
+      const m = months[parts[1]] ?? 0;
+      const y = 2000 + parseInt(parts[2]);
+      return new Date(y, m, d).toLocaleDateString(undefined, {
+        day: 'numeric', month: 'long', year: 'numeric'
+      });
+    }
+  } catch {}
+  return raw;
+}
+
+// ─── Countdown ─────────────────────────────────────────
+function startCountdown() {
+  clearInterval(countdownTimer);
+  countdownTimer = setInterval(() => {
+    const rem = nextRefreshAt - Date.now();
+    if (rem <= 0) { loadData(); return; }
+    document.getElementById('countdown').innerHTML =
+      `Next refresh in <strong>${formatCountdown(rem)}</strong>`;
+  }, 1000);
+}
+
+// ─── Render KPI Cards ──────────────────────────────────
+function renderKpiCards(metricMap) {
+  const kpiCats = CATEGORIES.filter(c => c.isKpi);
+  return `
+    <div class="kpi-grid">
+      ${kpiCats.map(cat => {
+        const m = metricMap[cat.kpiMetric];
+        if (!m) return '';
+        const lib = cat.lowerIsBetter?.has(cat.kpiMetric);
+        const dir = direction(cat.kpiMetric, m.yesterday, m.avg7d, lib);
+        const badgeLabel = m.avg7d === '-' ? '' : `vs 7d avg: ${m.avg7d}`;
+        return `
+          <div class="kpi-card" data-color="${cat.cardColor}">
+            <div class="kpi-label">${cat.name} &mdash; ${cat.kpiMetric}</div>
+            <div class="kpi-value">${m.yesterday}</div>
+            <div class="kpi-compare">
+              <span class="kpi-badge ${dir}">
+                ${dir === 'good' ? '&#9650;' : dir === 'bad' ? '&#9660;' : '&mdash;'}
+                ${dir === 'good' ? 'Better' : dir === 'bad' ? 'Lower' : 'Flat'}
+              </span>
+              <span class="kpi-compare-label">${badgeLabel}</span>
+            </div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `;
+}
+
+// ─── Render Category Section ───────────────────────────
+function renderCategory(cat, metricMap) {
+  const rows = cat.metrics.map(name => {
+    const m = metricMap[name];
+    if (!m) return '';
+    const lib = cat.lowerIsBetter?.has(name) ?? false;
+    const dir = direction(name, m.yesterday, m.avg7d, lib);
+    const tdCls = dir === 'neutral' ? '' : `val-${dir}`;
+    return `
+      <tr>
+        <td>${name}</td>
+        <td class="td-yesterday ${tdCls}">${m.yesterday}${dirArrow(dir)}</td>
+        <td>${m.avg7d}</td>
+        <td>${m.avg30d}</td>
+        <td>${m.mtdAvg}</td>
+      </tr>
+    `;
+  }).join('');
+
+  return `
+    <div class="category-section">
+      <div class="category-header" onclick="toggleSection(this)">
+        <div class="category-accent" style="background:${cat.color}"></div>
+        <span class="category-name">${cat.name}</span>
+        <span class="category-count">${cat.metrics.length} metrics</span>
+        <span class="category-chevron">&#9660;</span>
+      </div>
+      <div class="category-body">
+        <table class="metric-table">
+          <thead>
+            <tr>
+              <th>Metric</th>
+              <th class="th-yesterday">Yesterday</th>
+              <th>7d Avg</th>
+              <th>30d Avg</th>
+              <th>MTD Avg</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+    </div>
+  `;
+}
+
+// ─── Toggle section collapse ───────────────────────────
+function toggleSection(headerEl) {
+  headerEl.closest('.category-section').classList.toggle('collapsed');
+}
+
+// ─── Toast ─────────────────────────────────────────────
+let toastTimer = null;
+function showToast(msg, type = 'info', ms = 3500) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = `toast ${type} show`;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { el.className = 'toast'; }, ms);
+}
+
+// ─── Button state ──────────────────────────────────────
+function setBtnLoading(loading, label = 'Refresh') {
+  const btn   = document.getElementById('refresh-btn');
+  const icon  = document.getElementById('refresh-icon');
+  const lbl   = document.getElementById('refresh-label');
+  btn.disabled = loading;
+  lbl.textContent = loading ? label : 'Refresh';
+  if (loading) {
+    icon.outerHTML = '<span class="spinner" id="refresh-icon"></span>';
+  } else {
+    document.getElementById('refresh-icon').outerHTML =
+      '<span id="refresh-icon">&#8635;</span>';
+  }
+}
+
+// ─── Render dashboard from data object ─────────────────
+function renderDashboard(data) {
+  const metricMap = {};
+  (data.metrics || []).forEach(m => { metricMap[m.name] = m; });
+
+  document.getElementById('last-updated-text').textContent =
+    data.lastUpdated ? `Last updated: ${formatDate(data.lastUpdated)}` : '';
+
+  document.getElementById('yesterday-badge').textContent =
+    data.yesterdayDate
+      ? `Yesterday: ${formatYesterdayDate(data.yesterdayDate)}`
+      : 'Yesterday: —';
+
+  const dash = document.getElementById('dashboard');
+  dash.innerHTML =
+    renderKpiCards(metricMap) +
+    CATEGORIES.map(cat => renderCategory(cat, metricMap)).join('');
+
+  document.getElementById('loading').classList.add('hidden');
+  document.getElementById('error-box').classList.add('hidden');
+  dash.classList.remove('hidden');
+}
+
+// ─── Manual refresh button handler ─────────────────────
+async function onRefreshClick() {
+  setBtnLoading(true, 'Fetching…');
+  showToast('Fetching latest data from Google Sheets…', 'info', 30000);
+
+  try {
+    // Try live refresh via local server endpoint
+    const res = await fetch('/api/refresh?t=' + Date.now(), { cache: 'no-store' });
+
+    if (res.ok) {
+      const data = await res.json();
+      renderDashboard(data);
+      nextRefreshAt = Date.now() + REFRESH_MS;
+      showToast('Data refreshed successfully!', 'success');
+    } else {
+      // Server returned an error (fetch.py failed)
+      const body = await res.json().catch(() => ({}));
+      throw new Error(body.error || `Server error ${res.status}`);
+    }
+
+  } catch (err) {
+    if (err.name === 'TypeError') {
+      // /api/refresh doesn't exist (GitHub Pages or plain http.server)
+      // Fall back to re-reading the cached JSON
+      showToast('Live refresh unavailable — reloading cached data', 'info');
+      await loadData();
+    } else {
+      showToast(`Refresh failed: ${err.message}`, 'error', 6000);
+      console.error('Refresh error:', err);
+    }
+  }
+
+  setBtnLoading(false);
+}
+
+// ─── Background auto-load (reads cached JSON) ──────────
+async function loadData() {
+  document.getElementById('loading').classList.remove('hidden');
+  document.getElementById('dashboard').classList.add('hidden');
+  document.getElementById('error-box').classList.add('hidden');
+
+  try {
+    const res = await fetch('./data/metrics.json?t=' + Date.now(), { cache: 'no-store' });
+    if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+    const data = await res.json();
+    renderDashboard(data);
+  } catch (err) {
+    document.getElementById('loading').classList.add('hidden');
+    document.getElementById('error-msg').textContent = err.message;
+    document.getElementById('error-box').classList.remove('hidden');
+    document.getElementById('last-updated-text').textContent = 'Failed to load';
+    console.error(err);
+  }
+
+  nextRefreshAt = Date.now() + REFRESH_MS;
+}
+
+// ─── Init ──────────────────────────────────────────────
+loadData();
+startCountdown();
+</script>
+</body>
+</html>
