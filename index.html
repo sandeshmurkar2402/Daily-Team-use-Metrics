@@ -397,6 +397,144 @@
     .error-box p  { color: var(--muted); font-size: 0.82rem; }
 
     .hidden { display: none !important; }
+
+    /* ─── Settings button & token dot ────────────────────── */
+    .settings-btn {
+      background: transparent;
+      border: 1px solid var(--border2);
+      color: var(--muted);
+      width: 34px; height: 34px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.15s, color 0.15s;
+      flex-shrink: 0;
+    }
+    .settings-btn:hover { border-color: var(--blue); color: var(--blue); }
+
+    .token-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--border2);
+      flex-shrink: 0;
+    }
+    .token-dot.active {
+      background: var(--green);
+      box-shadow: 0 0 6px rgba(34,197,94,0.5);
+    }
+
+    /* ─── Modal ───────────────────────────────────────────── */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.65);
+      backdrop-filter: blur(4px);
+      z-index: 200;
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px;
+    }
+
+    .modal {
+      background: #0d1728;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      width: 100%; max-width: 500px;
+      padding: 28px;
+    }
+
+    .modal-title {
+      font-size: 1rem; font-weight: 700;
+      color: #fff; margin-bottom: 6px;
+    }
+
+    .modal-desc {
+      font-size: 0.78rem; color: var(--muted);
+      margin-bottom: 18px; line-height: 1.65;
+    }
+
+    .modal-desc a { color: var(--blue); text-decoration: none; }
+    .modal-desc a:hover { text-decoration: underline; }
+
+    .steps {
+      background: rgba(59,130,246,0.05);
+      border: 1px solid rgba(59,130,246,0.2);
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 18px;
+      font-size: 0.75rem;
+      color: var(--subtle);
+      line-height: 1.9;
+    }
+
+    .steps ol { padding-left: 16px; }
+    .steps code {
+      background: rgba(59,130,246,0.15);
+      color: #93c5fd;
+      padding: 1px 5px; border-radius: 3px;
+      font-size: 0.72rem;
+    }
+
+    .modal-status {
+      font-size: 0.75rem;
+      padding: 8px 12px; border-radius: 6px;
+      margin-bottom: 16px;
+    }
+
+    .modal-status.has-token {
+      background: var(--green-bg); color: var(--green);
+      border: 1px solid rgba(34,197,94,0.3);
+    }
+
+    .modal-status.no-token {
+      background: rgba(148,163,184,0.07); color: var(--muted);
+      border: 1px solid var(--border);
+    }
+
+    .modal-label {
+      font-size: 0.7rem; font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.07em;
+      margin-bottom: 7px;
+    }
+
+    .modal-input {
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 0.82rem;
+      padding: 10px 12px;
+      font-family: monospace;
+      margin-bottom: 18px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .modal-input:focus { border-color: var(--blue); }
+    .modal-input::placeholder { color: var(--muted); }
+
+    .modal-actions { display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; }
+
+    .modal-btn {
+      padding: 8px 18px; border-radius: 8px;
+      font-size: 0.8rem; font-weight: 600;
+      cursor: pointer; border: none;
+      transition: background 0.15s;
+    }
+
+    .modal-btn.primary { background: var(--blue); color: #fff; }
+    .modal-btn.primary:hover { background: #2563eb; }
+    .modal-btn.danger  {
+      background: rgba(239,68,68,0.12); color: var(--red);
+      border: 1px solid rgba(239,68,68,0.3);
+    }
+    .modal-btn.danger:hover  { background: rgba(239,68,68,0.22); }
+    .modal-btn.cancel  {
+      background: var(--surface2); color: var(--subtle);
+      border: 1px solid var(--border);
+    }
+    .modal-btn.cancel:hover { background: var(--border2); }
   </style>
 </head>
 <body>
@@ -414,12 +552,53 @@
 
   <div class="header-right">
     <div class="countdown-pill" id="countdown">—</div>
+    <div class="token-dot" id="token-dot" title="GitHub token status"></div>
     <button class="refresh-btn" id="refresh-btn" onclick="onRefreshClick()">
       <span id="refresh-icon">&#8635;</span>
       <span id="refresh-label">Refresh</span>
     </button>
+    <button class="settings-btn" onclick="openSettings()" title="Configure live refresh">&#9881;</button>
   </div>
 </header>
+
+<!-- ═══════════════════ SETTINGS MODAL ══════════════════ -->
+<div class="modal-overlay hidden" id="modal-overlay" onclick="handleOverlayClick(event)">
+  <div class="modal">
+    <div class="modal-title">Configure Live Refresh</div>
+    <div class="modal-desc">
+      The Refresh button triggers a GitHub Actions run that pulls the latest data from Google Sheets
+      directly — no waiting for the 2-hour cron. It needs a GitHub token to do this.
+    </div>
+
+    <div class="steps">
+      <strong style="color:var(--text)">Create a fine-grained PAT at GitHub:</strong>
+      <ol>
+        <li>Go to <a href="https://github.com/settings/tokens?type=beta" target="_blank">github.com/settings/tokens?type=beta</a></li>
+        <li>Click <strong>Generate new token</strong></li>
+        <li>Repository access → <code>Only select repositories</code> → <em>Daily-Team-use-Metrics</em></li>
+        <li>Permissions → Repository → <code>Actions</code> → <strong>Read and write</strong></li>
+        <li>Generate &amp; copy the token, paste below</li>
+      </ol>
+    </div>
+
+    <div class="modal-status no-token" id="modal-status">No token saved — live refresh is disabled</div>
+
+    <div class="modal-label">GitHub Fine-grained PAT</div>
+    <input
+      type="password"
+      class="modal-input"
+      id="token-input"
+      placeholder="github_pat_xxxxxxxxxxxx..."
+      autocomplete="off"
+    />
+
+    <div class="modal-actions">
+      <button class="modal-btn danger" onclick="clearSavedToken()">Clear token</button>
+      <button class="modal-btn cancel" onclick="closeSettings()">Cancel</button>
+      <button class="modal-btn primary" onclick="saveToken()">Save &amp; Enable</button>
+    </div>
+  </div>
+</div>
 
 <!-- ═══════════════════════ MAIN ══════════════════════════ -->
 <main>
@@ -453,7 +632,9 @@
 
 <!-- ═══════════════════════ SCRIPT ══════════════════════ -->
 <script>
-const REFRESH_MS = 2 * 60 * 60 * 1000;
+const REFRESH_MS  = 2 * 60 * 60 * 1000;
+const GH_REPO     = 'sandeshmurkar2402/Daily-Team-use-Metrics';
+const TOKEN_KEY   = 'gha_dispatch_token';
 
 // ─── Category definitions ──────────────────────────────
 const CATEGORIES = [
@@ -707,39 +888,148 @@ function renderDashboard(data) {
   dash.classList.remove('hidden');
 }
 
-// ─── Manual refresh button handler ─────────────────────
+// ─── Token management (localStorage) ──────────────────
+function getToken()       { return localStorage.getItem(TOKEN_KEY) || ''; }
+function setToken(t)      { localStorage.setItem(TOKEN_KEY, t.trim()); }
+function removeToken()    { localStorage.removeItem(TOKEN_KEY); }
+
+function updateTokenStatus() {
+  const hasToken = !!getToken();
+  const dot = document.getElementById('token-dot');
+  dot.className = `token-dot ${hasToken ? 'active' : ''}`;
+  dot.title = hasToken ? 'Live refresh enabled' : 'Live refresh — click ⚙ to set up';
+
+  const status = document.getElementById('modal-status');
+  if (status) {
+    status.className  = `modal-status ${hasToken ? 'has-token' : 'no-token'}`;
+    status.textContent = hasToken
+      ? 'Token saved — live refresh is enabled'
+      : 'No token saved — live refresh is disabled';
+  }
+}
+
+// ─── Settings modal ────────────────────────────────────
+function openSettings() {
+  updateTokenStatus();
+  document.getElementById('token-input').value = '';
+  document.getElementById('modal-overlay').classList.remove('hidden');
+}
+
+function closeSettings() {
+  document.getElementById('modal-overlay').classList.add('hidden');
+}
+
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeSettings();
+}
+
+function saveToken() {
+  const val = document.getElementById('token-input').value.trim();
+  if (!val) { showToast('Please paste a token first', 'error'); return; }
+  setToken(val);
+  updateTokenStatus();
+  closeSettings();
+  showToast('Token saved — Refresh button will now trigger live data fetch!', 'success', 4000);
+}
+
+function clearSavedToken() {
+  removeToken();
+  document.getElementById('token-input').value = '';
+  updateTokenStatus();
+  showToast('Token cleared', 'info');
+}
+
+// ─── Workflow dispatch + polling ───────────────────────
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+async function triggerWorkflowAndWait(token) {
+  const headers = {
+    'Authorization': `Bearer ${token}`,
+    'Accept': 'application/vnd.github+json',
+    'X-GitHub-Api-Version': '2022-11-28',
+    'Content-Type': 'application/json',
+  };
+
+  const triggerTime = new Date();
+
+  // 1. Trigger workflow_dispatch
+  const dispatchRes = await fetch(
+    `https://api.github.com/repos/${GH_REPO}/actions/workflows/update-data.yml/dispatches`,
+    { method: 'POST', headers, body: JSON.stringify({ ref: 'main' }) }
+  );
+
+  if (!dispatchRes.ok) {
+    if (dispatchRes.status === 401) throw new Error('Invalid token — check your GitHub PAT in Settings ⚙');
+    if (dispatchRes.status === 403) throw new Error('Token lacks Actions: write permission');
+    if (dispatchRes.status === 404) throw new Error('Workflow file not found in the repo');
+    throw new Error(`Dispatch failed: HTTP ${dispatchRes.status}`);
+  }
+
+  setBtnLoading(true, 'Queued…');
+  await sleep(4000); // give GitHub a moment to create the run
+
+  // 2. Poll for completion (max 3 minutes)
+  const TIMEOUT = 3 * 60 * 1000;
+  const INTERVAL = 5000;
+  const deadline = Date.now() + TIMEOUT;
+
+  while (Date.now() < deadline) {
+    const runsRes = await fetch(
+      `https://api.github.com/repos/${GH_REPO}/actions/runs?event=workflow_dispatch&per_page=10`,
+      { headers }
+    );
+
+    if (!runsRes.ok) throw new Error(`Could not poll run status: HTTP ${runsRes.status}`);
+
+    const { workflow_runs } = await runsRes.json();
+
+    // Find the run we just triggered (created at or after triggerTime)
+    const ourRun = workflow_runs.find(r => new Date(r.created_at) >= triggerTime);
+
+    if (ourRun) {
+      if (ourRun.status === 'completed') {
+        if (ourRun.conclusion === 'success') return; // done!
+        throw new Error(`Workflow ended with: ${ourRun.conclusion}. Check GitHub Actions.`);
+      }
+      setBtnLoading(true, ourRun.status === 'queued' ? 'Queued…' : 'Running…');
+    }
+
+    await sleep(INTERVAL);
+  }
+
+  throw new Error('Timed out (3 min). Check GitHub Actions for run status.');
+}
+
+// ─── Refresh button click ──────────────────────────────
 async function onRefreshClick() {
-  setBtnLoading(true, 'Fetching…');
-  showToast('Fetching latest data from Google Sheets…', 'info', 30000);
+  const token = getToken();
+
+  if (!token) {
+    openSettings();
+    showToast('Set up your GitHub token to enable live refresh', 'info', 4000);
+    return;
+  }
+
+  setBtnLoading(true, 'Starting…');
+  showToast('Triggering GitHub Actions run…', 'info', 120000);
 
   try {
-    // Try live refresh via local server endpoint
-    const res = await fetch('/api/refresh?t=' + Date.now(), { cache: 'no-store' });
+    await triggerWorkflowAndWait(token);
 
-    if (res.ok) {
-      const data = await res.json();
-      renderDashboard(data);
-      nextRefreshAt = Date.now() + REFRESH_MS;
-      showToast('Data refreshed successfully!', 'success');
-    } else {
-      // Server returned an error (fetch.py failed)
-      const body = await res.json().catch(() => ({}));
-      throw new Error(body.error || `Server error ${res.status}`);
-    }
+    // Workflow succeeded — wait briefly for GitHub Pages to redeploy, then reload
+    setBtnLoading(true, 'Reloading…');
+    showToast('Workflow complete! Loading fresh data…', 'info', 8000);
+    await sleep(3000);
+    await loadData();
+    showToast('Dashboard updated with latest data!', 'success', 4000);
 
   } catch (err) {
-    if (err.name === 'TypeError') {
-      // /api/refresh doesn't exist (GitHub Pages or plain http.server)
-      // Fall back to re-reading the cached JSON
-      showToast('Live refresh unavailable — reloading cached data', 'info');
-      await loadData();
-    } else {
-      showToast(`Refresh failed: ${err.message}`, 'error', 6000);
-      console.error('Refresh error:', err);
-    }
+    showToast(err.message, 'error', 7000);
+    console.error('Live refresh error:', err);
   }
 
   setBtnLoading(false);
+  nextRefreshAt = Date.now() + REFRESH_MS;
 }
 
 // ─── Background auto-load (reads cached JSON) ──────────
@@ -765,6 +1055,7 @@ async function loadData() {
 }
 
 // ─── Init ──────────────────────────────────────────────
+updateTokenStatus();
 loadData();
 startCountdown();
 </script>
