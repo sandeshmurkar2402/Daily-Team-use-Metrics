@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-05T10:59:28Z",
+  "lastUpdated": "2026-06-05T13:37:10Z",
   "yesterdayDate": "4-Jun-26",
   "metrics": [
     {
@@ -61,16 +61,16 @@
     {
       "name": "# of Paid sessions",
       "yesterday": "4",
-      "avg7d": "4.3",
+      "avg7d": "4.4",
       "avg30d": "4.8",
-      "mtdAvg": "3.8"
+      "mtdAvg": "4"
     },
     {
       "name": "Sessions Targets",
       "yesterday": "81",
-      "avg7d": "116.4",
-      "avg30d": "92.3",
-      "mtdAvg": "64.2"
+      "avg7d": "117.1",
+      "avg30d": "92.5",
+      "mtdAvg": "65.5"
     },
     {
       "name": "Targets Achieved",
@@ -82,9 +82,9 @@
     {
       "name": "% achieved targets for the day",
       "yesterday": "81.5%",
-      "avg7d": "59.3%",
-      "avg30d": "58.2%",
-      "mtdAvg": "56.6%"
+      "avg7d": "58.9%",
+      "avg30d": "58.1%",
+      "mtdAvg": "55.8%"
     },
     {
       "name": "One On One Targets for the day",
