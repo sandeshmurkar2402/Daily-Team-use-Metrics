@@ -2,8 +2,11 @@ name: Update Dashboard Data
 
 on:
   schedule:
-    - cron: '0 */2 * * *'   # Every 2 hours
-  workflow_dispatch:          # Allow manual trigger from GitHub UI
+    - cron: '30 3 * * *'    #  9:00 AM IST
+    - cron: '30 4 * * *'    # 10:00 AM IST
+    - cron: '30 7 * * *'    #  1:00 PM IST
+    - cron: '30 10 * * *'   #  4:00 PM IST
+  workflow_dispatch:          # Manual trigger via Refresh button or GitHub UI
 
 jobs:
   update-data:
