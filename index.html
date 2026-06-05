@@ -1005,8 +1005,7 @@ async function onRefreshClick() {
   const token = getToken();
 
   if (!token) {
-    openSettings();
-    showToast('Set up your GitHub token to enable live refresh', 'info', 4000);
+    showToast('Live refresh not configured — click the ⚙ gear icon to set up', 'info', 5000);
     return;
   }
 
@@ -1053,6 +1052,21 @@ async function loadData() {
 
   nextRefreshAt = Date.now() + REFRESH_MS;
 }
+
+// ─── Auto-seed token from URL hash ────────────────────
+// Visit: https://<pages-url>/#setup=YOUR_GITHUB_PAT  (one-time per browser)
+// The token is saved to localStorage and removed from the URL immediately.
+(function () {
+  const hash = window.location.hash;
+  if (hash.startsWith('#setup=')) {
+    const t = decodeURIComponent(hash.slice(7)).trim();
+    if (t) {
+      setToken(t);
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+      console.log('GitHub token auto-saved from URL. Live refresh is now enabled.');
+    }
+  }
+})();
 
 // ─── Init ──────────────────────────────────────────────
 updateTokenStatus();
