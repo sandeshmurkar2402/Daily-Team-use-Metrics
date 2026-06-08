@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-08T09:13:04Z",
+  "lastUpdated": "2026-06-08T12:15:08Z",
   "yesterdayDate": "7-Jun-26",
   "metrics": [
     {
@@ -75,16 +75,16 @@
     {
       "name": "Targets Achieved",
       "yesterday": "98",
-      "avg7d": "46.9",
+      "avg7d": "46.6",
       "avg30d": "55.9",
-      "mtdAvg": "46.9"
+      "mtdAvg": "46.6"
     },
     {
       "name": "% achieved targets for the day",
       "yesterday": "46.2%",
-      "avg7d": "51.1%",
-      "avg30d": "56.8%",
-      "mtdAvg": "51.1%"
+      "avg7d": "50.4%",
+      "avg30d": "56.6%",
+      "mtdAvg": "50.4%"
     },
     {
       "name": "One On One Targets for the day",
@@ -145,9 +145,9 @@
     {
       "name": "Hindi Session Registrations for the day",
       "yesterday": "6",
-      "avg7d": "5",
+      "avg7d": "4.9",
       "avg30d": "11.1",
-      "mtdAvg": "5"
+      "mtdAvg": "4.9"
     }
   ]
 }
