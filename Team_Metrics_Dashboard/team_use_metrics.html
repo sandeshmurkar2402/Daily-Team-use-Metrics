@@ -655,12 +655,20 @@ const CATEGORIES = [
     metrics: ["Overall cr%", "Web cr%", "IOS app cr%", "Android app cr%"],
   },
   {
+    name: "Registrations",
+    color: "#f59e0b",
+    cardColor: "amber",
+    isKpi: true,
+    kpiMetric: "Registrations",
+    metrics: ["Registrations"],
+  },
+  {
     name: "Sessions",
     color: "#10b981",
     cardColor: "green",
     isKpi: true,
     kpiMetric: "# of Paid sessions",
-    metrics: ["# of Paid sessions", "Sessions Targets", "Targets Achieved", "% achieved targets for the day"],
+    metrics: ["# of Paid sessions"],
   },
   {
     name: "1:1 Sessions",
@@ -1002,31 +1010,17 @@ async function triggerWorkflowAndWait(token) {
 
 // ─── Refresh button click ──────────────────────────────
 async function onRefreshClick() {
-  const token = getToken();
-
-  if (!token) {
-    showToast('Live refresh not configured — click the ⚙ gear icon to set up', 'info', 5000);
-    return;
-  }
-
-  setBtnLoading(true, 'Starting…');
-  showToast('Triggering GitHub Actions run…', 'info', 120000);
-
+  setBtnLoading(true, 'Refreshing…');
   try {
-    await triggerWorkflowAndWait(token);
-
-    // Workflow succeeded — wait briefly for GitHub Pages to redeploy, then reload
-    setBtnLoading(true, 'Reloading…');
-    showToast('Workflow complete! Loading fresh data…', 'info', 8000);
-    await sleep(3000);
-    await loadData();
+    const res = await fetch('/api/refresh', { cache: 'no-store' });
+    if (!res.ok) throw new Error(`Refresh failed: HTTP ${res.status}`);
+    const data = await res.json();
+    renderDashboard(data);
     showToast('Dashboard updated with latest data!', 'success', 4000);
-
   } catch (err) {
     showToast(err.message, 'error', 7000);
-    console.error('Live refresh error:', err);
+    console.error('Refresh error:', err);
   }
-
   setBtnLoading(false);
   nextRefreshAt = Date.now() + REFRESH_MS;
 }

@@ -81,7 +81,7 @@ def main():
 
     result = service.spreadsheets().values().get(
         spreadsheetId=config["spreadsheetId"],
-        range=f"{SHEET_NAME}!A1:Z500",
+        range=f"{SHEET_NAME}!A1:AZ500",
     ).execute()
 
     raw = result.get("values", [])
