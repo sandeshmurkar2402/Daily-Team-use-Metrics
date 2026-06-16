@@ -1,160 +1,160 @@
 {
-  "lastUpdated": "2026-06-15T16:08:25Z",
-  "yesterdayDate": "14-Jun-26",
+  "lastUpdated": "2026-06-16T09:09:32Z",
+  "yesterdayDate": "15-Jun-26",
   "metrics": [
     {
       "name": "Total PVs",
-      "yesterday": "13,557",
-      "avg7d": "13,136",
-      "avg30d": "11,592",
-      "mtdAvg": "12,309"
+      "yesterday": "2,018",
+      "avg7d": "13,329",
+      "avg30d": "11,750",
+      "mtdAvg": "11,623"
     },
     {
       "name": "Web PV",
-      "yesterday": "12,967",
-      "avg7d": "12,230",
-      "avg30d": "10,720",
-      "mtdAvg": "11,499"
+      "yesterday": "1,916",
+      "avg7d": "12,445",
+      "avg30d": "10,893",
+      "mtdAvg": "10,860"
     },
     {
       "name": "iOS app open",
-      "yesterday": "353",
-      "avg7d": "634.6",
-      "avg30d": "497.2",
-      "mtdAvg": "558.7"
+      "yesterday": "61",
+      "avg7d": "612.7",
+      "avg30d": "496.5",
+      "mtdAvg": "525.5"
     },
     {
       "name": "Android app open",
-      "yesterday": "329",
-      "avg7d": "458.3",
-      "avg30d": "520.4",
-      "mtdAvg": "412.3"
+      "yesterday": "49",
+      "avg7d": "452.3",
+      "avg30d": "504.9",
+      "mtdAvg": "388.1"
     },
     {
       "name": "Overall cr%",
-      "yesterday": "0.8%",
-      "avg7d": "1.5%",
+      "yesterday": "0.5%",
+      "avg7d": "1.4%",
       "avg30d": "1.1%",
-      "mtdAvg": "1.3%"
+      "mtdAvg": "1.2%"
     },
     {
       "name": "Web cr%",
-      "yesterday": "0.7%",
-      "avg7d": "1.2%",
+      "yesterday": "0.5%",
+      "avg7d": "1.1%",
       "avg30d": "0.8%",
       "mtdAvg": "1.0%"
     },
     {
       "name": "IOS app cr%",
-      "yesterday": "2.0%",
-      "avg7d": "3.5%",
-      "avg30d": "2.9%",
+      "yesterday": "3.3%",
+      "avg7d": "2.9%",
+      "avg30d": "2.8%",
       "mtdAvg": "3.0%"
     },
     {
       "name": "Android app cr%",
-      "yesterday": "2.1%",
-      "avg7d": "4.1%",
+      "yesterday": "0.0%",
+      "avg7d": "3.9%",
       "avg30d": "2.2%",
-      "mtdAvg": "3.0%"
+      "mtdAvg": "2.8%"
     },
     {
       "name": "# of Paid sessions",
-      "yesterday": "4",
+      "yesterday": "2",
       "avg7d": "4.9",
-      "avg30d": "5.0",
-      "mtdAvg": "4.6"
+      "avg30d": "4.9",
+      "mtdAvg": "4.4"
     },
     {
       "name": "Sessions Targets",
-      "yesterday": "32",
-      "avg7d": "106.4",
-      "avg30d": "100.3",
-      "mtdAvg": "83.2"
+      "yesterday": "13",
+      "avg7d": "80.7",
+      "avg30d": "92.0",
+      "mtdAvg": "78.5"
     },
     {
       "name": "Targets Achieved",
-      "yesterday": "64",
-      "avg7d": "138",
-      "avg30d": "77.3",
-      "mtdAvg": "89.9"
+      "yesterday": "6",
+      "avg7d": "145.7",
+      "avg30d": "74.5",
+      "mtdAvg": "84.3"
     },
     {
       "name": "% achieved targets for the day",
-      "yesterday": "200.0%",
-      "avg7d": "106.8%",
-      "avg30d": "68.0%",
-      "mtdAvg": "90.8%"
+      "yesterday": "46.2%",
+      "avg7d": "134.7%",
+      "avg30d": "73.0%",
+      "mtdAvg": "87.8%"
     },
     {
       "name": "One On One Targets for the day",
       "yesterday": "15",
       "avg7d": "15",
-      "avg30d": "21.4",
+      "avg30d": "21.1",
       "mtdAvg": "15"
     },
     {
       "name": "One On One achieved for the day",
-      "yesterday": "13",
-      "avg7d": "21",
-      "avg30d": "17.0",
-      "mtdAvg": "18.6"
+      "yesterday": "4",
+      "avg7d": "21.3",
+      "avg30d": "16.9",
+      "mtdAvg": "17.7"
     },
     {
       "name": "One On One Targets Achieved",
-      "yesterday": "86.7%",
-      "avg7d": "140.0%",
-      "avg30d": "88.6%",
-      "mtdAvg": "124.3%"
+      "yesterday": "26.7%",
+      "avg7d": "141.9%",
+      "avg30d": "89.3%",
+      "mtdAvg": "117.8%"
     },
     {
       "name": "Customer Queries for the day",
-      "yesterday": "65",
-      "avg7d": "204.9",
-      "avg30d": "144.6",
-      "mtdAvg": "198.6"
+      "yesterday": "0",
+      "avg7d": "195.7",
+      "avg30d": "146.7",
+      "mtdAvg": "185.4"
     },
     {
       "name": "First Response Time Average",
-      "yesterday": "97",
-      "avg7d": "101.9",
-      "avg30d": "191.3",
+      "yesterday": "-",
+      "avg7d": "101.3",
+      "avg30d": "186.6",
       "mtdAvg": "175.1"
     },
     {
       "name": "Resolution Time Average",
-      "yesterday": "1753",
-      "avg7d": "687.6",
-      "avg30d": "1,360",
+      "yesterday": "-",
+      "avg7d": "839.6",
+      "avg30d": "1,378",
       "mtdAvg": "1,591"
     },
     {
       "name": "App Revenue Share for the day",
-      "yesterday": "18.61%",
-      "avg7d": "23.3%",
-      "avg30d": "20.7%",
-      "mtdAvg": "20.9%"
+      "yesterday": "39.50%",
+      "avg7d": "22.6%",
+      "avg30d": "20.4%",
+      "mtdAvg": "22.1%"
     },
     {
       "name": "Hindi Sessions for the Day",
-      "yesterday": "1",
+      "yesterday": "0",
       "avg7d": "1.4",
-      "avg30d": "1.4",
-      "mtdAvg": "1.4"
+      "avg30d": "1.5",
+      "mtdAvg": "1.3"
     },
     {
       "name": "Hindi Session Registrations for the day",
-      "yesterday": "1",
-      "avg7d": "8.9",
-      "avg30d": "11.8",
+      "yesterday": "-",
+      "avg7d": "8.1",
+      "avg30d": "11.4",
       "mtdAvg": "6.5"
     },
     {
       "name": "Registrations",
-      "yesterday": "107",
-      "avg7d": "189.7",
-      "avg30d": "118.0",
-      "mtdAvg": "151.5"
+      "yesterday": "12",
+      "avg7d": "180.7",
+      "avg30d": "118.2",
+      "mtdAvg": "142.2"
     }
   ]
 }
