@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-25T08:00:31Z",
+  "lastUpdated": "2026-06-25T10:25:40Z",
   "yesterdayDate": "24-Jun-26",
   "metrics": [
     {
@@ -60,17 +60,17 @@
     },
     {
       "name": "# of Paid sessions",
-      "yesterday": "9",
+      "yesterday": "8",
       "avg7d": "6.3",
       "avg30d": "4.9",
-      "mtdAvg": "5.0"
+      "mtdAvg": "4.9"
     },
     {
       "name": "Sessions Targets",
-      "yesterday": "56",
+      "yesterday": "48",
       "avg7d": "208.9",
       "avg30d": "115.8",
-      "mtdAvg": "111.6"
+      "mtdAvg": "111.2"
     },
     {
       "name": "Targets Achieved",
@@ -81,10 +81,10 @@
     },
     {
       "name": "% achieved targets for the day",
-      "yesterday": "46.4%",
+      "yesterday": "54.2%",
       "avg7d": "54.7%",
       "avg30d": "75.6%",
-      "mtdAvg": "80.0%"
+      "mtdAvg": "80.3%"
     },
     {
       "name": "One On One Targets for the day",
@@ -137,7 +137,7 @@
     },
     {
       "name": "Hindi Sessions for the Day",
-      "yesterday": "2",
+      "yesterday": "1",
       "avg7d": "1.9",
       "avg30d": "1.4",
       "mtdAvg": "1.4"
