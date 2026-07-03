@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-03T06:47:55Z",
+  "lastUpdated": "2026-07-03T07:46:39Z",
   "yesterdayDate": "2-Jul-26",
   "metrics": [
     {
@@ -60,10 +60,10 @@
     },
     {
       "name": "# of Paid sessions",
-      "yesterday": "3",
+      "yesterday": "4",
       "avg7d": "7.4",
       "avg30d": "5.6",
-      "mtdAvg": "5"
+      "mtdAvg": "5.5"
     },
     {
       "name": "Sessions Targets",
