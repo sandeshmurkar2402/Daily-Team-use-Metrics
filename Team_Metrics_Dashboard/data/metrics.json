@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-06T08:47:09Z",
+  "lastUpdated": "2026-07-06T11:48:52Z",
   "yesterdayDate": "5-Jul-26",
   "metrics": [
     {
@@ -74,17 +74,17 @@
     },
     {
       "name": "Targets Achieved",
-      "yesterday": "121",
+      "yesterday": "120",
       "avg7d": "75",
       "avg30d": "104.0",
-      "mtdAvg": "56.2"
+      "mtdAvg": "56"
     },
     {
       "name": "% achieved targets for the day",
-      "yesterday": "73.8%",
+      "yesterday": "73.2%",
       "avg7d": "53.8%",
       "avg30d": "78.1%",
-      "mtdAvg": "63.4%"
+      "mtdAvg": "63.2%"
     },
     {
       "name": "One On One Targets for the day",
@@ -109,24 +109,24 @@
     },
     {
       "name": "Customer Queries for the day",
-      "yesterday": "0",
-      "avg7d": "114.9",
-      "avg30d": "159.6",
-      "mtdAvg": "35"
+      "yesterday": "100",
+      "avg7d": "175.6",
+      "avg30d": "173.8",
+      "mtdAvg": "140"
     },
     {
       "name": "First Response Time Average",
-      "yesterday": "-",
-      "avg7d": "194",
-      "avg30d": "226.1",
-      "mtdAvg": "162"
+      "yesterday": "180",
+      "avg7d": "174.8",
+      "avg30d": "219.9",
+      "mtdAvg": "153.8"
     },
     {
       "name": "Resolution Time Average",
-      "yesterday": "-",
-      "avg7d": "524.5",
-      "avg30d": "1,216",
-      "mtdAvg": "485"
+      "yesterday": "3056",
+      "avg7d": "1,156",
+      "avg30d": "1,295",
+      "mtdAvg": "1,907"
     },
     {
       "name": "App Revenue Share for the day",
@@ -144,10 +144,10 @@
     },
     {
       "name": "Hindi Session Registrations for the day",
-      "yesterday": "2",
+      "yesterday": "1",
       "avg7d": "14.4",
       "avg30d": "12.2",
-      "mtdAvg": "10.8"
+      "mtdAvg": "10.6"
     },
     {
       "name": "Registrations",
