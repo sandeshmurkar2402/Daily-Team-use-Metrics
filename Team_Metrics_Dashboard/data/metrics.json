@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-29T10:11:42Z",
+  "lastUpdated": "2026-07-29T12:30:32Z",
   "yesterdayDate": "28-Jul-26",
   "metrics": [
     {
@@ -77,14 +77,14 @@
       "yesterday": "35",
       "avg7d": "145.4",
       "avg30d": "114.5",
-      "mtdAvg": "111.7"
+      "mtdAvg": "111.8"
     },
     {
       "name": "% achieved targets for the day",
       "yesterday": "47.3%",
       "avg7d": "63.6%",
       "avg30d": "58.8%",
-      "mtdAvg": "59.8%"
+      "mtdAvg": "59.9%"
     },
     {
       "name": "One On One Targets for the day",
