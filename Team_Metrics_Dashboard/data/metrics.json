@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-07T08:35:30Z",
+  "lastUpdated": "2026-08-07T11:23:09Z",
   "yesterdayDate": "6-Aug-26",
   "metrics": [
     {
@@ -88,10 +88,10 @@
     },
     {
       "name": "One On One Targets for the day",
-      "yesterday": "23",
-      "avg7d": "21.6",
-      "avg30d": "21.6",
-      "mtdAvg": "21"
+      "yesterday": "20",
+      "avg7d": "21.1",
+      "avg30d": "21.5",
+      "mtdAvg": "20"
     },
     {
       "name": "One On One achieved for the day",
@@ -102,31 +102,31 @@
     },
     {
       "name": "One On One Targets Achieved",
-      "yesterday": "139.1%",
-      "avg7d": "142.2%",
-      "avg30d": "114.0%",
-      "mtdAvg": "144.6%"
+      "yesterday": "160.0%",
+      "avg7d": "145.2%",
+      "avg30d": "114.7%",
+      "mtdAvg": "151.7%"
     },
     {
       "name": "Customer Queries for the day",
       "yesterday": "0",
-      "avg7d": "153",
-      "avg30d": "216.6",
-      "mtdAvg": "86.5"
+      "avg7d": "0",
+      "avg30d": "0",
+      "mtdAvg": "0"
     },
     {
       "name": "First Response Time Average",
       "yesterday": "-",
-      "avg7d": "182.7",
-      "avg30d": "446.1",
-      "mtdAvg": "162.2"
+      "avg7d": "-",
+      "avg30d": "-",
+      "mtdAvg": "-"
     },
     {
       "name": "Resolution Time Average",
       "yesterday": "-",
-      "avg7d": "1,952",
-      "avg30d": "1,460",
-      "mtdAvg": "2,303"
+      "avg7d": "-",
+      "avg30d": "-",
+      "mtdAvg": "-"
     },
     {
       "name": "App Revenue Share for the day",
