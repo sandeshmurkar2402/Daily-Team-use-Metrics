@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-12T05:59:06Z",
+  "lastUpdated": "2026-08-12T08:49:03Z",
   "yesterdayDate": "11-Aug-26",
   "metrics": [
     {
@@ -109,24 +109,24 @@
     },
     {
       "name": "Customer Queries for the day",
-      "yesterday": "0",
-      "avg7d": "174.9",
-      "avg30d": "187.5",
-      "mtdAvg": "145.8"
+      "yesterday": "190",
+      "avg7d": "198",
+      "avg30d": "192.9",
+      "mtdAvg": "177.8"
     },
     {
       "name": "First Response Time Average",
-      "yesterday": "-",
-      "avg7d": "407.7",
-      "avg30d": "426.7",
-      "mtdAvg": "321.4"
+      "yesterday": "225",
+      "avg7d": "385.3",
+      "avg30d": "420.9",
+      "mtdAvg": "306.3"
     },
     {
       "name": "Resolution Time Average",
-      "yesterday": "-",
-      "avg7d": "1,799",
-      "avg30d": "1,560",
-      "mtdAvg": "2,027"
+      "yesterday": "1175",
+      "avg7d": "1,638",
+      "avg30d": "1,530",
+      "mtdAvg": "1,826"
     },
     {
       "name": "App Revenue Share for the day",
