@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-19T04:08:14Z",
+  "lastUpdated": "2026-08-19T05:03:43Z",
   "yesterdayDate": "18-Aug-26",
   "metrics": [
     {
@@ -88,10 +88,10 @@
     },
     {
       "name": "One On One Targets for the day",
-      "yesterday": "24",
-      "avg7d": "24",
-      "avg30d": "22.4",
-      "mtdAvg": "22.2"
+      "yesterday": "23",
+      "avg7d": "22",
+      "avg30d": "22.0",
+      "mtdAvg": "21.4"
     },
     {
       "name": "One On One achieved for the day",
@@ -102,10 +102,10 @@
     },
     {
       "name": "One On One Targets Achieved",
-      "yesterday": "104.2%",
-      "avg7d": "116.1%",
-      "avg30d": "120.4%",
-      "mtdAvg": "125.2%"
+      "yesterday": "108.7%",
+      "avg7d": "126.6%",
+      "avg30d": "122.8%",
+      "mtdAvg": "129.6%"
     },
     {
       "name": "Customer Queries for the day",
