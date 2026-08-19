@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-19T08:04:59Z",
+  "lastUpdated": "2026-08-19T10:55:56Z",
   "yesterdayDate": "18-Aug-26",
   "metrics": [
     {
@@ -60,10 +60,10 @@
     },
     {
       "name": "# of Paid sessions",
-      "yesterday": "8",
+      "yesterday": "9",
       "avg7d": "6.9",
       "avg30d": "6.1",
-      "mtdAvg": "6.8"
+      "mtdAvg": "6.9"
     },
     {
       "name": "Sessions Targets",
@@ -74,17 +74,17 @@
     },
     {
       "name": "Targets Achieved",
-      "yesterday": "541",
+      "yesterday": "550",
       "avg7d": "98.7",
       "avg30d": "139.9",
-      "mtdAvg": "144.2"
+      "mtdAvg": "144.7"
     },
     {
       "name": "% achieved targets for the day",
-      "yesterday": "68.3%",
+      "yesterday": "69.4%",
       "avg7d": "47.0%",
       "avg30d": "61.1%",
-      "mtdAvg": "57.7%"
+      "mtdAvg": "57.8%"
     },
     {
       "name": "One On One Targets for the day",
@@ -110,23 +110,23 @@
     {
       "name": "Customer Queries for the day",
       "yesterday": "0",
-      "avg7d": "129.6",
-      "avg30d": "163.8",
-      "mtdAvg": "148.5"
+      "avg7d": "0",
+      "avg30d": "0",
+      "mtdAvg": "0"
     },
     {
       "name": "First Response Time Average",
       "yesterday": "-",
-      "avg7d": "259.3",
-      "avg30d": "303.1",
-      "mtdAvg": "291.7"
+      "avg7d": "-",
+      "avg30d": "-",
+      "mtdAvg": "-"
     },
     {
       "name": "Resolution Time Average",
       "yesterday": "-",
-      "avg7d": "2,006",
-      "avg30d": "1,707",
-      "mtdAvg": "1,939"
+      "avg7d": "-",
+      "avg30d": "-",
+      "mtdAvg": "-"
     },
     {
       "name": "App Revenue Share for the day",
