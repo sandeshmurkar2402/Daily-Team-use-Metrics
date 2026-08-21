@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-21T05:06:20Z",
+  "lastUpdated": "2026-08-21T08:07:30Z",
   "yesterdayDate": "20-Aug-26",
   "metrics": [
     {
@@ -74,14 +74,14 @@
     },
     {
       "name": "Targets Achieved",
-      "yesterday": "29",
+      "yesterday": "30",
       "avg7d": "174.9",
       "avg30d": "155.8",
       "mtdAvg": "133.4"
     },
     {
       "name": "% achieved targets for the day",
-      "yesterday": "18.1%",
+      "yesterday": "18.8%",
       "avg7d": "51.0%",
       "avg30d": "60.3%",
       "mtdAvg": "55.2%"
@@ -144,10 +144,10 @@
     },
     {
       "name": "Hindi Session Registrations for the day",
-      "yesterday": "22",
+      "yesterday": "23",
       "avg7d": "10",
       "avg30d": "12.5",
-      "mtdAvg": "10"
+      "mtdAvg": "10.1"
     },
     {
       "name": "Registrations",
