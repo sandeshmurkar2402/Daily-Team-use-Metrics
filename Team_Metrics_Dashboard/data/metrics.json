@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-14T13:00:58Z",
+  "lastUpdated": "2026-10-14T15:22:25Z",
   "yesterdayDate": "13-Oct-26",
   "metrics": [
     {
@@ -75,14 +75,14 @@
     {
       "name": "Targets Achieved",
       "yesterday": "261",
-      "avg7d": "131",
-      "avg30d": "104.3",
-      "mtdAvg": "150.6"
+      "avg7d": "131.1",
+      "avg30d": "104.4",
+      "mtdAvg": "150.7"
     },
     {
       "name": "% achieved targets for the day",
       "yesterday": "116.0%",
-      "avg7d": "70.8%",
+      "avg7d": "70.9%",
       "avg30d": "63.1%",
       "mtdAvg": "76.3%"
     },
