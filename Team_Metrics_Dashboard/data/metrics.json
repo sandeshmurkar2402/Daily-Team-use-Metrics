@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-23T19:26:03Z",
+  "lastUpdated": "2026-11-23T22:10:41Z",
   "yesterdayDate": "23-Nov-26",
   "metrics": [
     {
@@ -74,17 +74,17 @@
     },
     {
       "name": "Targets Achieved",
-      "yesterday": "755",
+      "yesterday": "804",
       "avg7d": "73",
       "avg30d": "79.3",
-      "mtdAvg": "110.9"
+      "mtdAvg": "113.0"
     },
     {
       "name": "% achieved targets for the day",
-      "yesterday": "114.7%",
+      "yesterday": "122.2%",
       "avg7d": "65.2%",
       "avg30d": "48.5%",
-      "mtdAvg": "51.4%"
+      "mtdAvg": "51.8%"
     },
     {
       "name": "One On One Targets for the day",
